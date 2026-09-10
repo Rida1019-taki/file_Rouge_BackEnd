@@ -1,6 +1,8 @@
 package org.e.filerouge.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.e.filerouge.entity.Ville;
+import org.e.filerouge.service.VilleService;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 

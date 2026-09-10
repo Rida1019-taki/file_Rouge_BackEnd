@@ -1,6 +1,8 @@
 package org.e.filerouge.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.e.filerouge.entity.Categorie;
+import org.e.filerouge.service.CategorieService;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 

@@ -1,6 +1,8 @@
 package org.e.filerouge.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.e.filerouge.entity.Image;
+import org.e.filerouge.service.ImageService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.*;
 

@@ -1,5 +1,7 @@
 package org.e.filerouge.mapper;
 
+import org.e.filerouge.dto.auth.reservation.ReservationResponse;
+import org.e.filerouge.entity.Reservation;
 import org.springframework.stereotype.Component;
 
 @Component

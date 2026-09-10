@@ -2,6 +2,10 @@ package org.e.filerouge.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.e.filerouge.dto.auth.AuthResponse;
+import org.e.filerouge.dto.auth.LoginRequest;
+import org.e.filerouge.dto.auth.RegisterRequest;
+import org.e.filerouge.service.AuthService;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 

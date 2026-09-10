@@ -2,6 +2,7 @@ package org.e.filerouge.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.e.filerouge.enums.Role;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import org.springframework.security.core.GrantedAuthority;

@@ -9,6 +9,7 @@ import org.e.filerouge.entity.Voiture;
 import org.e.filerouge.enums.StatutReservation;
 import org.e.filerouge.enums.StatutVoiture;
 import org.e.filerouge.exception.BadRequestException;
+import org.e.filerouge.exception.ResourceNotFoundException;
 import org.e.filerouge.mapper.ReservationMapper;
 import org.e.filerouge.repository.ClientRepository;
 import org.e.filerouge.repository.ReservationRepository;

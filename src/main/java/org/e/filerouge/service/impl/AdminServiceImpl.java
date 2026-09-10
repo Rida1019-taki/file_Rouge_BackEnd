@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.e.filerouge.repository.ReservationRepository;
 import org.e.filerouge.repository.UtilisateurRepository;
 import org.e.filerouge.repository.VoitureRepository;
+import org.e.filerouge.service.AdminService;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
