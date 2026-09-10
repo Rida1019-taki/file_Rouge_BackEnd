@@ -36,7 +36,6 @@ class VoitureRepositoryTest {
 
     @Test
     void testFindByVilleIdAndCategorieId() {
-        // Arrange
         Ville ville = new Ville();
         ville.setNom("Casablanca");
         ville = villeRepository.save(ville);
@@ -67,10 +66,8 @@ class VoitureRepositoryTest {
 
         voitureRepository.save(voiture);
 
-        // Act
         List<Voiture> result = voitureRepository.findByVilleIdAndCategorieId(ville.getId(), categorie.getId());
 
-        // Assert
         assertEquals(1, result.size());
         assertEquals("Toyota", result.get(0).getMarque());
         assertEquals("Casablanca", result.get(0).getVille().getNom());

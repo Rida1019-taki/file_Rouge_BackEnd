@@ -33,7 +33,6 @@ class AuthServiceImplTest {
 
     @Test
     void testLogin_Success() {
-        // Arrange
         LoginRequest request = new LoginRequest("test@email.com", "password123");
         Utilisateur utilisateur = new Utilisateur(1L, "Nom", "Prenom", "test@email.com", "0600000000", "password123", Role.CLIENT, true);
         
@@ -42,10 +41,8 @@ class AuthServiceImplTest {
         when(authentication.getPrincipal()).thenReturn(utilisateur);
         when(jwtUtil.generateToken(utilisateur)).thenReturn("mocked-jwt-token");
 
-        // Act
         AuthResponse response = authService.login(request);
 
-        // Assert
         assertNotNull(response);
         assertEquals("mocked-jwt-token", response.token());
         assertEquals("test@email.com", response.email());

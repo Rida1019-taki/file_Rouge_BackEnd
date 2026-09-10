@@ -50,7 +50,6 @@ class VoitureServiceImplTest {
 
     @Test
     void testCreateVoiture_Success() {
-        // Arrange
         VoitureRequest request = new VoitureRequest("Toyota", "Corolla", 2022, "1234-A-1", "Noire", 5, "Automatique", BigDecimal.valueOf(300), 1L, 1L);
         Long ownerId = 1L;
 
@@ -78,10 +77,8 @@ class VoitureServiceImplTest {
         when(voitureRepository.save(any(Voiture.class))).thenReturn(voiture);
         when(voitureMapper.toResponse(any(Voiture.class))).thenReturn(responseMock);
 
-        // Act
         VoitureResponse result = voitureService.create(request, ownerId);
 
-        // Assert
         assertNotNull(result);
         assertEquals("Toyota", result.marque());
         assertEquals(1L, result.ownerId());

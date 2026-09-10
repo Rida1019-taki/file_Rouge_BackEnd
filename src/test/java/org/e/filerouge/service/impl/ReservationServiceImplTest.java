@@ -46,7 +46,6 @@ class ReservationServiceImplTest {
 
     @Test
     void testCreateReservation_Success() {
-        // Arrange
         Long clientId = 1L;
         Long voitureId = 1L;
         LocalDate dateDebut = LocalDate.now().plusDays(1);
@@ -71,10 +70,8 @@ class ReservationServiceImplTest {
         when(reservationRepository.save(any(Reservation.class))).thenReturn(reservation);
         when(reservationMapper.toResponse(any(Reservation.class))).thenReturn(responseMock);
 
-        // Act
         ReservationResponse result = reservationService.create(request, clientId);
 
-        // Assert
         assertNotNull(result);
         assertEquals(BigDecimal.valueOf(300), result.montantTotal());
         assertEquals(clientId, result.clientId());
