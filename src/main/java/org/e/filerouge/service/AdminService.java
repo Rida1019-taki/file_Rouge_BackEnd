@@ -6,5 +6,9 @@ public interface AdminService {
 
     long countCars();
 
+    long countCarsSale();
+
+    long countCarsRental();
+
     long countReservations();
 }

@@ -17,6 +17,6 @@ public class Image {
     @Column(nullable = false)
     private String url;
     private boolean principale;
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Voiture voiture;
 }

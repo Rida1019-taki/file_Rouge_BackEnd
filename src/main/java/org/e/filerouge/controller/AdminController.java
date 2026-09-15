@@ -14,6 +14,6 @@ public class AdminController {
 
     @GetMapping("/stats")
     public Map<String, Long> stats() {
-        return Map.of("users", service.countUsers(), "cars", service.countCars(), "reservations", service.countReservations());
+        return Map.of("users", service.countUsers(), "cars", service.countCars(), "carsSale", service.countCarsSale(), "carsRental", service.countCarsRental(), "reservations", service.countReservations());
     }
 }

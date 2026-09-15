@@ -5,10 +5,14 @@ import lombok.RequiredArgsConstructor;
 import org.e.filerouge.dto.auth.voiture.VoitureRequest;
 import org.e.filerouge.dto.auth.voiture.VoitureResponse;
 import org.e.filerouge.entity.Utilisateur;
+import org.e.filerouge.enums.ListingType;
 import org.e.filerouge.service.VoitureService;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/voitures")
@@ -18,8 +22,14 @@ public class VoitureController {
     private final VoitureService service;
 
     @GetMapping
-    public Object all() {
-        return service.findAll();
+    public Object all(@RequestParam(required = false) ListingType listingType) {
+        return listingType == null ? service.findAll() : service.findByListingType(listingType);
+    }
+
+    @PreAuthorize("hasRole('OWNER')")
+    @GetMapping("/mine")
+    public List<VoitureResponse> mine(Authentication a) {
+        return service.findMine(((Utilisateur) a.getPrincipal()).getId());
     }
 
     @GetMapping("/{id}")
@@ -29,7 +39,7 @@ public class VoitureController {
 
     @PostMapping
     public ResponseEntity<VoitureResponse> create(@Valid @RequestBody VoitureRequest r, Authentication a) {
-        return ResponseEntity.status(201).body(service.create(r, Long.parseLong(((Utilisateur) a.getPrincipal()).getId().toString())));
+        return ResponseEntity.status(201).body(service.create(r, ((Utilisateur) a.getPrincipal()).getId()));
     }
 
     @PutMapping("/{id}")

@@ -16,7 +16,7 @@ public class Owner {
 
     @Id
     private Long id;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "id")
     private Utilisateur utilisateur;

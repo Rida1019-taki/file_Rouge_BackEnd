@@ -35,4 +35,9 @@ public class ReservationController {
     public ReservationResponse status(@PathVariable Long id, @PathVariable String status) {
         return service.updateStatus(id, status);
     }
+
+    @PatchMapping("/{id}/annuler")
+    public ReservationResponse annuler(@PathVariable Long id, Authentication a) {
+        return service.cancel(id, ((Utilisateur) a.getPrincipal()).getId());
+    }
 }

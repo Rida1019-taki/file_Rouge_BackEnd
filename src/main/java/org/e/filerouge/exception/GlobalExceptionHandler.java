@@ -17,6 +17,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
     }
 
+    @ExceptionHandler(UnauthorizedException.class)
+    ResponseEntity<?> unauthorized(UnauthorizedException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("message", e.getMessage()));
+    }
+
     @ExceptionHandler(Exception.class)
     ResponseEntity<?> all(Exception e) {
         return ResponseEntity.status(500).body(Map.of("message", e.getMessage()));

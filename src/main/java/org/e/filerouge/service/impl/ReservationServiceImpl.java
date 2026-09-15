@@ -10,6 +10,7 @@ import org.e.filerouge.enums.StatutReservation;
 import org.e.filerouge.enums.StatutVoiture;
 import org.e.filerouge.exception.BadRequestException;
 import org.e.filerouge.exception.ResourceNotFoundException;
+import org.e.filerouge.exception.UnauthorizedException;
 import org.e.filerouge.mapper.ReservationMapper;
 import org.e.filerouge.repository.ClientRepository;
 import org.e.filerouge.repository.ReservationRepository;
@@ -19,6 +20,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.math.*;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -53,12 +55,14 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     @Cacheable(value = "client_reservations", key = "#id")
+    @Transactional(readOnly = true)
     public List<ReservationResponse> findMyReservations(Long id) {
         return reservations.findByClientId(id).stream().map(mapper::toResponse).toList();
     }
 
     @Override
     @Cacheable(value = "owner_reservations", key = "#id")
+    @Transactional(readOnly = true)
     public List<ReservationResponse> findOwnerReservations(Long id) {
         return reservations.findByVoitureOwnerId(id).stream().map(mapper::toResponse).toList();
     }
@@ -75,6 +79,23 @@ public class ReservationServiceImpl implements ReservationService {
         } catch (Exception e) {
             throw new BadRequestException("Statut invalide");
         }
+        return mapper.toResponse(reservations.save(r));
+    }
+
+    @Override
+    @Caching(evict = {
+            @CacheEvict(value = "client_reservations", allEntries = true),
+            @CacheEvict(value = "owner_reservations", allEntries = true)
+    })
+    public ReservationResponse cancel(Long id, Long clientId) {
+        Reservation r = reservations.findById(id).orElseThrow(() -> new ResourceNotFoundException("Réservation introuvable"));
+        if (!r.getClient().getId().equals(clientId)) {
+            throw new UnauthorizedException("Vous n'êtes pas autorisé à annuler cette réservation");
+        }
+        if (r.getStatut() != StatutReservation.EN_ATTENTE) {
+            throw new BadRequestException("Seules les réservations en attente peuvent être annulées");
+        }
+        r.setStatut(StatutReservation.ANNULEE);
         return mapper.toResponse(reservations.save(r));
     }
 }

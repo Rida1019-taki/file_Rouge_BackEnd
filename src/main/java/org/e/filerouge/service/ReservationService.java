@@ -14,4 +14,6 @@ public interface ReservationService {
     List<ReservationResponse> findOwnerReservations(Long ownerId);
 
     ReservationResponse updateStatus(Long id, String status);
+
+    ReservationResponse cancel(Long id, Long clientId);
 }

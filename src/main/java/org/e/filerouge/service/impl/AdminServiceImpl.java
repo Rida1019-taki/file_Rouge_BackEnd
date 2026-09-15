@@ -1,6 +1,7 @@
 package org.e.filerouge.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.e.filerouge.enums.ListingType;
 import org.e.filerouge.repository.ReservationRepository;
 import org.e.filerouge.repository.UtilisateurRepository;
 import org.e.filerouge.repository.VoitureRepository;
@@ -26,6 +27,18 @@ public class AdminServiceImpl implements AdminService {
     @Cacheable(value = "stats_cars")
     public long countCars() {
         return cars.count();
+    }
+
+    @Override
+    @Cacheable(value = "stats_cars_sale")
+    public long countCarsSale() {
+        return cars.countByListingType(ListingType.SALE);
+    }
+
+    @Override
+    @Cacheable(value = "stats_cars_rental")
+    public long countCarsRental() {
+        return cars.countByListingType(ListingType.RENTAL);
     }
 
     @Override
