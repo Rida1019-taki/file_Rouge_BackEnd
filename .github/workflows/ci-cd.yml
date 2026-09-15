@@ -44,4 +44,4 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build Docker image
-        run: docker build -t fileRouge-backend:latest .
+        run: docker build -t filerouge-backend:latest .
