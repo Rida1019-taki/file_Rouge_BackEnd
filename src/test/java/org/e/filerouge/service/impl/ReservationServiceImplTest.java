@@ -49,7 +49,7 @@ class ReservationServiceImplTest {
         Long clientId = 1L;
         Long voitureId = 1L;
         LocalDate dateDebut = LocalDate.now().plusDays(1);
-        LocalDate dateFin = LocalDate.now().plusDays(4); // 3 days
+        LocalDate dateFin = LocalDate.now().plusDays(4);
 
         ReservationRequest request = new ReservationRequest(voitureId, dateDebut, dateFin);
 
@@ -62,7 +62,7 @@ class ReservationServiceImplTest {
         client.setId(clientId);
 
         Reservation reservation = new Reservation(1L, dateDebut, dateFin, BigDecimal.valueOf(300), StatutReservation.EN_ATTENTE, client, voiture);
-        
+
         ReservationResponse responseMock = new ReservationResponse(1L, dateDebut, dateFin, BigDecimal.valueOf(300), "EN_ATTENTE", clientId, voitureId);
 
         when(voitureRepository.findById(voitureId)).thenReturn(Optional.of(voiture));
