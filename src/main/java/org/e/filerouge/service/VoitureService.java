@@ -3,6 +3,7 @@ package org.e.filerouge.service;
 import org.e.filerouge.dto.auth.voiture.VoitureRequest;
 import org.e.filerouge.dto.auth.voiture.VoitureResponse;
 import org.e.filerouge.enums.ListingType;
+import org.e.filerouge.enums.Role;
 
 import java.util.List;
 
@@ -20,5 +21,5 @@ public interface VoitureService {
 
     VoitureResponse update(Long id, VoitureRequest r, Long ownerId);
 
-    void delete(Long id, Long ownerId);
+    void delete(Long id, Long userId, Role role);
 }

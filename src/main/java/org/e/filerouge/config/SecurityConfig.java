@@ -44,13 +44,17 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html").permitAll()
                                 .requestMatchers(HttpMethod.GET,
-                                        "/api/voitures/**"
+                                        "/api/voitures/**",
+                                        "/uploads/**"
                                 )
                                 .permitAll()
                                 .requestMatchers(
                                         "/api/admin/**",
                                         "/api/users/**")
                                 .hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE,
+                                        "/api/voitures/**")
+                                .hasAnyRole("OWNER", "ADMIN")
                                 .requestMatchers(
                                         "/api/owner/**",
                                         "/api/voitures/**")

@@ -5,6 +5,7 @@ import org.e.filerouge.dto.auth.voiture.VoitureRequest;
 import org.e.filerouge.dto.auth.voiture.VoitureResponse;
 import org.e.filerouge.entity.Voiture;
 import org.e.filerouge.enums.ListingType;
+import org.e.filerouge.enums.Role;
 import org.e.filerouge.enums.StatutVoiture;
 import org.e.filerouge.exception.BadRequestException;
 import org.e.filerouge.exception.ResourceNotFoundException;
@@ -139,12 +140,12 @@ public class VoitureServiceImpl implements VoitureService {
             @CacheEvict(value = "voitures", key = "#id"),
             @CacheEvict(value = "voitures_all", allEntries = true),
             @CacheEvict(value = "voitures_by_type", allEntries = true),
-            @CacheEvict(value = "voitures_mine", key = "#ownerId"),
+            @CacheEvict(value = "voitures_mine", key = "#userId"),
             @CacheEvict(value = "stats_cars", allEntries = true)
     })
-    public void delete(Long id, Long ownerId) {
+    public void delete(Long id, Long userId, Role role) {
         Voiture v = cars.findById(id).orElseThrow(() -> new ResourceNotFoundException("Voiture introuvable"));
-        if (!v.getOwner().getId().equals(ownerId)) {
+        if (role != Role.ADMIN && !v.getOwner().getId().equals(userId)) {
             throw new BadRequestException("Non autorisé");
         }
         cars.delete(v);

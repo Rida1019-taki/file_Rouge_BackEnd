@@ -7,6 +7,7 @@ import org.e.filerouge.entity.Reservation;
 import org.e.filerouge.entity.Voiture;
 import org.e.filerouge.enums.StatutReservation;
 import org.e.filerouge.enums.StatutVoiture;
+import org.e.filerouge.enums.TypeReservation;
 import org.e.filerouge.mapper.ReservationMapper;
 import org.e.filerouge.repository.ClientRepository;
 import org.e.filerouge.repository.ReservationRepository;
@@ -19,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -51,7 +53,7 @@ class ReservationServiceImplTest {
         LocalDate dateDebut = LocalDate.now().plusDays(1);
         LocalDate dateFin = LocalDate.now().plusDays(4);
 
-        ReservationRequest request = new ReservationRequest(voitureId, dateDebut, dateFin);
+        ReservationRequest request = new ReservationRequest(voitureId, TypeReservation.LOCATION, dateDebut, dateFin);
 
         Voiture voiture = new Voiture();
         voiture.setId(voitureId);
@@ -61,9 +63,9 @@ class ReservationServiceImplTest {
         Client client = new Client();
         client.setId(clientId);
 
-        Reservation reservation = new Reservation(1L, dateDebut, dateFin, BigDecimal.valueOf(300), StatutReservation.EN_ATTENTE, client, voiture);
+Reservation reservation = new Reservation(1L, TypeReservation.LOCATION, dateDebut, dateFin, BigDecimal.valueOf(300), StatutReservation.EN_ATTENTE, client, voiture);
 
-        ReservationResponse responseMock = new ReservationResponse(1L, dateDebut, dateFin, BigDecimal.valueOf(300), "EN_ATTENTE", clientId, voitureId);
+ReservationResponse responseMock = new ReservationResponse(1L, "LOCATION", dateDebut, dateFin, BigDecimal.valueOf(300), "EN_ATTENTE", clientId, "Benali", "Ahmed", voitureId, "Renault", "Clio", List.of());
 
         when(voitureRepository.findById(voitureId)).thenReturn(Optional.of(voiture));
         when(clientRepository.findById(clientId)).thenReturn(Optional.of(client));
