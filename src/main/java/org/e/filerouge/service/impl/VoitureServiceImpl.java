@@ -15,9 +15,7 @@ import org.e.filerouge.repository.OwnerRepository;
 import org.e.filerouge.repository.VilleRepository;
 import org.e.filerouge.repository.VoitureRepository;
 import org.e.filerouge.service.VoitureService;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,28 +32,24 @@ public class VoitureServiceImpl implements VoitureService {
     private final VoitureMapper mapper;
 
     @Override
-    @Cacheable(value = "voitures_all")
     @Transactional(readOnly = true)
     public List<VoitureResponse> findAll() {
         return cars.findAll().stream().map(mapper::toResponse).toList();
     }
 
     @Override
-    @Cacheable(value = "voitures_by_type", key = "#type.name()")
     @Transactional(readOnly = true)
     public List<VoitureResponse> findByListingType(ListingType type) {
         return cars.findByListingType(type).stream().map(mapper::toResponse).toList();
     }
 
     @Override
-    @Cacheable(value = "voitures_mine", key = "#ownerId")
     @Transactional(readOnly = true)
     public List<VoitureResponse> findMine(Long ownerId) {
         return cars.findByOwnerId(ownerId).stream().map(mapper::toResponse).toList();
     }
 
     @Override
-    @Cacheable(value = "voitures", key = "#id")
     @Transactional(readOnly = true)
     public VoitureResponse getById(Long id) {
         return mapper.toResponse(cars.findById(id).orElseThrow(() -> new ResourceNotFoundException("Voiture introuvable")));
@@ -63,12 +57,6 @@ public class VoitureServiceImpl implements VoitureService {
 
     @Override
     @Transactional
-    @Caching(evict = {
-            @CacheEvict(value = "voitures_all", allEntries = true),
-            @CacheEvict(value = "voitures_by_type", allEntries = true),
-            @CacheEvict(value = "voitures_mine", key = "#ownerId"),
-            @CacheEvict(value = "stats_cars", allEntries = true)
-    })
     public VoitureResponse create(VoitureRequest r, Long ownerId) {
         Voiture v = new Voiture();
         fill(v, r);
@@ -82,12 +70,6 @@ public class VoitureServiceImpl implements VoitureService {
 
     @Override
     @Transactional
-    @Caching(evict = {
-            @CacheEvict(value = "voitures", key = "#id"),
-            @CacheEvict(value = "voitures_all", allEntries = true),
-            @CacheEvict(value = "voitures_by_type", allEntries = true),
-            @CacheEvict(value = "voitures_mine", key = "#ownerId")
-    })
     public VoitureResponse update(Long id, VoitureRequest r, Long ownerId) {
         Voiture v = cars.findById(id).orElseThrow(() -> new ResourceNotFoundException("Voiture introuvable"));
         if (!v.getOwner().getId().equals(ownerId)) {
@@ -134,13 +116,6 @@ public class VoitureServiceImpl implements VoitureService {
     }
 
     @Override
-    @Caching(evict = {
-            @CacheEvict(value = "voitures", key = "#id"),
-            @CacheEvict(value = "voitures_all", allEntries = true),
-            @CacheEvict(value = "voitures_by_type", allEntries = true),
-            @CacheEvict(value = "voitures_mine", key = "#userId"),
-            @CacheEvict(value = "stats_cars", allEntries = true)
-    })
     public void delete(Long id, Long userId, Role role) {
         Voiture v = cars.findById(id).orElseThrow(() -> new ResourceNotFoundException("Voiture introuvable"));
         if (role != Role.ADMIN && !v.getOwner().getId().equals(userId)) {

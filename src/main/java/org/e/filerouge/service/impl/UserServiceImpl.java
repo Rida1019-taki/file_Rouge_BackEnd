@@ -6,7 +6,6 @@ import org.e.filerouge.entity.Utilisateur;
 import org.e.filerouge.exception.ResourceNotFoundException;
 import org.e.filerouge.repository.UtilisateurRepository;
 import org.e.filerouge.service.UserService;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -27,7 +26,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @CacheEvict(value = "stats_users", allEntries = true)
     public UserResponse update(Long id, UserUpdateRequest request) {
         Utilisateur u = find(id);
         if (request.nom() != null) u.setNom(request.nom());
@@ -37,7 +35,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @CacheEvict(value = "stats_users", allEntries = true)
     public void delete(Long id) {
         find(id);
         repo.deleteById(id);

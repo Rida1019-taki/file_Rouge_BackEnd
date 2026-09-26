@@ -6,7 +6,7 @@ import org.e.filerouge.exception.ResourceNotFoundException;
 import org.e.filerouge.mapper.UtilisateurMapper;
 import org.e.filerouge.repository.UtilisateurRepository;
 import org.e.filerouge.service.ClientService;
-import org.springframework.cache.annotation.Cacheable;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +18,6 @@ public class ClientServiceImpl implements ClientService {
     private final UtilisateurMapper mapper;
 
     @Override
-    @Cacheable(value = "clients", key = "#id")
     @Transactional(readOnly = true)
     public ClientResponse getById(Long id) {
         var u = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Client introuvable"));

@@ -18,9 +18,6 @@ import org.e.filerouge.repository.ClientRepository;
 import org.e.filerouge.repository.ReservationRepository;
 import org.e.filerouge.repository.VoitureRepository;
 import org.e.filerouge.service.ReservationService;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,10 +36,6 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     @Transactional
-    @Caching(evict = {
-            @CacheEvict(value = "client_reservations", key = "#clientId"),
-            @CacheEvict(value = "stats_reservations", allEntries = true)
-    })
     public ReservationResponse create(ReservationRequest r, Long clientId) {
         TypeReservation type = r.type() != null ? r.type() : TypeReservation.LOCATION;
         Voiture v = cars.findById(r.voitureId()).orElseThrow(() -> new ResourceNotFoundException("Voiture introuvable"));
@@ -87,14 +80,12 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    @Cacheable(value = "client_reservations", key = "#id")
     @Transactional(readOnly = true)
     public List<ReservationResponse> findMyReservations(Long id) {
         return reservations.findByClientId(id).stream().map(mapper::toResponse).toList();
     }
 
     @Override
-    @Cacheable(value = "owner_reservations", key = "#id")
     @Transactional(readOnly = true)
     public List<ReservationResponse> findOwnerReservations(Long id) {
         return reservations.findByVoitureOwnerId(id).stream().map(mapper::toResponse).toList();
@@ -102,15 +93,6 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     @Transactional
-    @Caching(evict = {
-            @CacheEvict(value = "client_reservations", allEntries = true),
-            @CacheEvict(value = "owner_reservations", allEntries = true),
-            @CacheEvict(value = "voitures", allEntries = true),
-            @CacheEvict(value = "voitures_all", allEntries = true),
-            @CacheEvict(value = "voitures_by_type", allEntries = true),
-            @CacheEvict(value = "voitures_mine", allEntries = true),
-            @CacheEvict(value = "stats_reservations", allEntries = true)
-    })
     public ReservationResponse updateStatus(Long id, String status) {
         Reservation r = reservations.findById(id).orElseThrow(() -> new ResourceNotFoundException("Réservation introuvable"));
         StatutReservation nouveau;
@@ -130,10 +112,6 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     @Transactional
-    @Caching(evict = {
-            @CacheEvict(value = "client_reservations", allEntries = true),
-            @CacheEvict(value = "owner_reservations", allEntries = true)
-    })
     public ReservationResponse cancel(Long id, Long clientId) {
         Reservation r = reservations.findById(id).orElseThrow(() -> new ResourceNotFoundException("Réservation introuvable"));
         if (!r.getClient().getId().equals(clientId)) {

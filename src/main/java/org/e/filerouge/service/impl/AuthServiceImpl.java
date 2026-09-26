@@ -13,7 +13,7 @@ import org.e.filerouge.repository.OwnerRepository;
 import org.e.filerouge.repository.UtilisateurRepository;
 import org.e.filerouge.security.JwtUtil;
 import org.e.filerouge.service.AuthService;
-import org.springframework.cache.annotation.CacheEvict;
+
 import org.springframework.security.authentication.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,6 @@ public class AuthServiceImpl implements AuthService {
     private final JwtUtil jwt;
 
     @Override
-    @CacheEvict(value = "stats_users", allEntries = true)
     public AuthResponse register(RegisterRequest r) {
         if (repo.findByEmail(r.email()).isPresent()) {
             throw new IllegalArgumentException("Email déjà utilisé");
