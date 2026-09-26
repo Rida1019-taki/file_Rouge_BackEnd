@@ -1,11 +1,3 @@
--- =============================================================
--- Tomobilty.ma - Données de test (seed)
--- Mots de passe:
---   - Tous les utilisateurs (sauf admin): 123456
---   - Admin: admin2026
--- =============================================================
-
--- ---------- Catégories ----------
 INSERT INTO categories (id, nom, description) VALUES
     (1, 'CITADINE', 'Citadines économiques, idéales en ville'),
     (2, 'BERLINE', 'Berlines confortables pour les longs trajets'),
@@ -25,12 +17,12 @@ INSERT INTO villes (id, nom) VALUES
 
 -- ---------- Utilisateurs ----------
 -- id 1-2: Clients, id 3-4: Owners, id 5: Admin
-INSERT INTO utilisateurs (id, nom, prenom, email, telephone, mot_de_passe, role, actif) VALUES
-    (1, 'Benali', 'Ahmed', 'client@test.com', '0611111111', '$2a$10$QFYddcdNGYyRloH9AXP55.Sdq6oIhzACYv8.WVCsQEAOZIkj8VUpe', 'CLIENT', TRUE),
-    (2, 'El Amrani', 'Salma', 'client2@test.com', '0622222222', '$2a$10$QFYddcdNGYyRloH9AXP55.Sdq6oIhzACYv8.WVCsQEAOZIkj8VUpe', 'CLIENT', TRUE),
-    (3, 'Tazi', 'Yassine', 'owner@test.com', '0633333333', '$2a$10$QFYddcdNGYyRloH9AXP55.Sdq6oIhzACYv8.WVCsQEAOZIkj8VUpe', 'OWNER', TRUE),
-    (4, 'El Fassi', 'Karim', 'owner2@test.com', '0644444444', '$2a$10$QFYddcdNGYyRloH9AXP55.Sdq6oIhzACYv8.WVCsQEAOZIkj8VUpe', 'OWNER', TRUE),
-    (5, 'Admin', 'Amine', 'admin@test.com', '0655555555', '$2a$10$LG2ox4OjZuV6oA9mKcpIy./B9ES7qIP3kJvOAyYAXxO6tWH8uFZBO', 'ADMIN', TRUE);
+INSERT INTO utilisateurs (id, nom, prenom, email, telephone, mot_de_passe, role) VALUES
+    (1, 'Benali', 'Ahmed', 'client@test.com', '0611111111', '$2a$10$QFYddcdNGYyRloH9AXP55.Sdq6oIhzACYv8.WVCsQEAOZIkj8VUpe', 'CLIENT'),
+    (2, 'El Amrani', 'Salma', 'client2@test.com', '0622222222', '$2a$10$QFYddcdNGYyRloH9AXP55.Sdq6oIhzACYv8.WVCsQEAOZIkj8VUpe', 'CLIENT'),
+    (3, 'Tazi', 'Yassine', 'owner@test.com', '0633333333', '$2a$10$QFYddcdNGYyRloH9AXP55.Sdq6oIhzACYv8.WVCsQEAOZIkj8VUpe', 'OWNER'),
+    (4, 'El Fassi', 'Karim', 'owner2@test.com', '0644444444', '$2a$10$QFYddcdNGYyRloH9AXP55.Sdq6oIhzACYv8.WVCsQEAOZIkj8VUpe', 'OWNER'),
+    (5, 'Admin', 'Amine', 'admin@test.com', '0655555555', '$2a$10$LG2ox4OjZuV6oA9mKcpIy./B9ES7qIP3kJvOAyYAXxO6tWH8uFZBO', 'ADMIN');
 
 -- Tables filles (Inheritance JOINED)
 INSERT INTO clients (id) VALUES (1), (2);
@@ -39,15 +31,15 @@ INSERT INTO owners (id, type_owner, nom_entreprise) VALUES
     (4, 'agence', 'AutoPremium');
 
 -- ---------- Voitures ----------
-INSERT INTO voitures (id, marque, modele, annee, immatriculation, couleur, nombre_places, transmission, prix_par_jour, statut, owner_id, categorie_id, ville_id) VALUES
-    (1, 'Renault', 'Clio 5', 2022, '12345-A-6', 'Rouge', 5, 'Manuel', 250.00, 'DISPONIBLE', 3, 1, 1),
-    (2, 'Dacia', 'Sandero', 2021, '23456-B-7', 'Blanc', 5, 'Manuel', 200.00, 'DISPONIBLE', 3, 1, 2),
-    (3, 'BMW', 'Série 3', 2023, '34567-C-8', 'Noir', 5, 'Automatique', 500.00, 'DISPONIBLE', 4, 2, 1),
-    (4, 'Land Rover', 'Evoque', 2022, '45678-D-9', 'Gris', 5, 'Automatique', 900.00, 'LOUEE', 4, 3, 3),
-    (5, 'Toyota', 'Corolla', 2023, '56789-E-1', 'Bleu', 5, 'Automatique', 350.00, 'DISPONIBLE', 3, 2, 4),
-    (6, 'Porsche', '911 Carrera', 2021, '67890-F-2', 'Jaune', 2, 'Automatique', 1500.00, 'MAINTENANCE', 4, 4, 3),
-    (7, 'Peugeot', '3008', 2022, '78901-G-3', 'Argent', 5, 'Automatique', 400.00, 'DISPONIBLE', 3, 3, 5),
-    (8, 'Mercedes', 'Classe C', 2023, '89012-H-4', 'Blanc', 5, 'Automatique', 700.00, 'DISPONIBLE', 4, 6, 6);
+INSERT INTO voitures (id, marque, modele, annee, nombre_places, transmission, prix_par_jour, statut, owner_id, categorie_id, ville_id) VALUES
+    (1, 'Renault', 'Clio 5', 2022, 5, 'Manuel', 250.00, 'DISPONIBLE', 3, 1, 1),
+    (2, 'Dacia', 'Sandero', 2021, 5, 'Manuel', 200.00, 'DISPONIBLE', 3, 1, 2),
+    (3, 'BMW', 'Série 3', 2023, 5, 'Automatique', 500.00, 'DISPONIBLE', 4, 2, 1),
+    (4, 'Land Rover', 'Evoque', 2022, 5, 'Automatique', 900.00, 'LOUEE', 4, 3, 3),
+    (5, 'Toyota', 'Corolla', 2023, 5, 'Automatique', 350.00, 'DISPONIBLE', 3, 2, 4),
+    (6, 'Porsche', '911 Carrera', 2021, 2, 'Automatique', 1500.00, 'MAINTENANCE', 4, 4, 3),
+    (7, 'Peugeot', '3008', 2022, 5, 'Automatique', 400.00, 'DISPONIBLE', 3, 3, 5),
+    (8, 'Mercedes', 'Classe C', 2023, 5, 'Automatique', 700.00, 'DISPONIBLE', 4, 6, 6);
 
 -- ---------- Images ----------
 INSERT INTO images (id, url, principale, voiture_id) VALUES

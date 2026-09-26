@@ -5,6 +5,6 @@ import jakarta.validation.constraints.*;
 public record UserUpdateRequest(@Size(max = 255)
                                 String nom, @Size(max = 255)
                                 String prenom, @Size(max = 50)
-                                String telephone, Boolean actif) {
+                                String telephone) {
 
 }

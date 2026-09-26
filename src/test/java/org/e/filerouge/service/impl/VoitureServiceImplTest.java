@@ -51,7 +51,7 @@ class VoitureServiceImplTest {
 
     @Test
     void testCreateVoiture_Success() {
-        VoitureRequest request = new VoitureRequest("Toyota", "Corolla", 2022, "1234-A-1", "Noire", 5, "Automatique", BigDecimal.valueOf(300), null, ListingType.RENTAL, 1L, 1L);
+        VoitureRequest request = new VoitureRequest("Toyota", "Corolla", 2022, 5, "Automatique", BigDecimal.valueOf(300), null, ListingType.RENTAL, 1L, 1L);
         Long ownerId = 1L;
 
         Owner owner = new Owner();
@@ -72,7 +72,7 @@ class VoitureServiceImplTest {
         voiture.setId(1L);
         voiture.setMarque("Toyota");
 
-        VoitureResponse responseMock = new VoitureResponse(1L, "Toyota", "Corolla", 2022, "1234-A-1", "Noire", 5, "Automatique", BigDecimal.valueOf(300), null, "RENTAL", "DISPONIBLE", 1L, "owner@example.com", "0612345678", 1L, "Berline", 1L, "Casablanca", null);
+        VoitureResponse responseMock = new VoitureResponse(1L, "Toyota", "Corolla", 2022, 5, "Automatique", BigDecimal.valueOf(300), null, "RENTAL", "DISPONIBLE", 1L, "owner@example.com", "0612345678", 1L, "Berline", 1L, "Casablanca", null);
 
         when(ownerRepository.findById(ownerId)).thenReturn(Optional.of(owner));
         when(categorieRepository.findById(1L)).thenReturn(Optional.of(categorie));

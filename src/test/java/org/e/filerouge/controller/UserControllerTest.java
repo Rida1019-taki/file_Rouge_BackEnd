@@ -41,7 +41,7 @@ class UserControllerTest {
 
     @Test
     void nonAdminRoleIsForbidden() throws Exception {
-        repo.save(new Utilisateur(null, "Test", "Client", "client-sec@test.com", "0600000000", "x", Role.CLIENT, true));
+        repo.save(new Utilisateur(null, "Test", "Client", "client-sec@test.com", "0600000000", "x", Role.CLIENT));
         var client = repo.findByEmail("client-sec@test.com").orElseThrow();
         mockMvc.perform(get("/api/users").header("Authorization", "Bearer " + jwt.generateToken(client)))
                 .andExpect(status().isForbidden());
@@ -49,7 +49,7 @@ class UserControllerTest {
 
     @Test
     void adminCanListUsers() throws Exception {
-        repo.save(new Utilisateur(null, "Test", "Admin", "admin-sec@test.com", "0600000001", "x", Role.ADMIN, true));
+        repo.save(new Utilisateur(null, "Test", "Admin", "admin-sec@test.com", "0600000001", "x", Role.ADMIN));
         var admin = repo.findByEmail("admin-sec@test.com").orElseThrow();
         mockMvc.perform(get("/api/users").header("Authorization", "Bearer " + jwt.generateToken(admin)))
                 .andExpect(status().isOk());

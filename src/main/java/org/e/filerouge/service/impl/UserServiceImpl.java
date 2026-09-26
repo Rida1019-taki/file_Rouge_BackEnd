@@ -33,7 +33,6 @@ public class UserServiceImpl implements UserService {
         if (request.nom() != null) u.setNom(request.nom());
         if (request.prenom() != null) u.setPrenom(request.prenom());
         if (request.telephone() != null) u.setTelephone(request.telephone());
-        if (request.actif() != null) u.setActif(request.actif());
         return toResponse(repo.save(u));
     }
 
@@ -49,6 +48,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private UserResponse toResponse(Utilisateur u) {
-        return new UserResponse(u.getId(), u.getNom(), u.getPrenom(), u.getEmail(), u.getTelephone(), u.getRole().name(), u.isActif());
+        return new UserResponse(u.getId(), u.getNom(), u.getPrenom(), u.getEmail(), u.getTelephone(), u.getRole().name());
     }
 }

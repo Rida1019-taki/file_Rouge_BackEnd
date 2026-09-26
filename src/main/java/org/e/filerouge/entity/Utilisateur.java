@@ -36,7 +36,6 @@ public class Utilisateur implements UserDetails {
     @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(nullable = false)
     private Role role;
-    private boolean actif = true;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -70,6 +69,6 @@ public class Utilisateur implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return actif;
+        return true;
     }
 }

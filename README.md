@@ -80,6 +80,32 @@ src/
 
 Cette organisation permet de séparer la logique métier, l'accès aux données, les contrôleurs REST et la sécurité.
 
+## 6.1 Diagrammes du projet
+
+### Diagramme de classes
+
+![Diagramme de classes](screenShot/diagraldeclass.png)
+
+### Diagramme de cas d'utilisation
+
+![Diagramme de cas d'utilisation](screenShot/usecase.png)
+
+### Diagramme de séquence 1
+
+![Diagramme de séquence 1](screenShot/sequence.png)
+
+### Diagramme de séquence 2
+
+![Diagramme de séquence 2](screenShot/sequence2.png)
+
+### Diagramme de séquence 3
+
+![Diagramme de séquence 3](screenShot/sequence3.png)
+
+### Diagramme supplémentaire
+
+![Diagramme supplémentaire](screenShot/img.png)
+
 ---
 
 # 7. Installation et lancement

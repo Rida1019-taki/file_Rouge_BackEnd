@@ -34,7 +34,7 @@ class AuthServiceImplTest {
     @Test
     void testLogin_Success() {
         LoginRequest request = new LoginRequest("test@email.com", "password123");
-        Utilisateur utilisateur = new Utilisateur(1L, "Nom", "Prenom", "test@email.com", "0600000000", "password123", Role.CLIENT, true);
+        Utilisateur utilisateur = new Utilisateur(1L, "Nom", "Prenom", "test@email.com", "0600000000", "password123", Role.CLIENT);
 
         Authentication authentication = mock(Authentication.class);
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(authentication);

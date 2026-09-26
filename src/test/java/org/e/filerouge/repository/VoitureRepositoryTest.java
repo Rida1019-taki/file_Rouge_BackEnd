@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @ActiveProfiles("test")
+@Transactional
 class VoitureRepositoryTest {
 
     @Autowired
@@ -46,7 +48,7 @@ class VoitureRepositoryTest {
         categorie.setNom("Berline");
         categorie = categorieRepository.save(categorie);
 
-        Utilisateur u = new Utilisateur(null, "Nom", "Prenom", "owner@email.com", "0600", "pass", Role.OWNER, true);
+        Utilisateur u = new Utilisateur(null, "Nom", "Prenom", "owner@email.com", "0600", "pass", Role.OWNER);
         u = utilisateurRepository.save(u);
         Owner owner = new Owner();
         owner.setUtilisateur(u);
@@ -56,8 +58,6 @@ class VoitureRepositoryTest {
         voiture.setMarque("Toyota");
         voiture.setModele("Corolla");
         voiture.setAnnee(2022);
-        voiture.setImmatriculation("123-A-1");
-        voiture.setCouleur("Noir");
         voiture.setNombrePlaces(5);
         voiture.setTransmission("Auto");
         voiture.setPrixParJour(BigDecimal.valueOf(300));

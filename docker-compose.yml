@@ -4,10 +4,10 @@ services:
     container_name: tomobilty-db
     restart: always
     environment:
-      MYSQL_DATABASE: fileRouge
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
-      - "3307:3306" # Exposes port 3307 on the host to avoid conflict with any local MySQL running on 3306
+      - "3307:3306"
     volumes:
       - fileRouge_db_data:/var/lib/mysql
     healthcheck:
@@ -16,7 +16,7 @@ services:
       timeout: 5s
       retries: 5
 
-  fileRouge-api:
+  filerouge-api:
     build:
       context: .
       dockerfile: Dockerfile
@@ -25,11 +25,15 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - DB_HOST=mysql
-      - DB_PORT=3306
-      - DB_NAME=fileRouge
-      - DB_USERNAME=root
-      - DB_PASSWORD=root
+      DB_HOST: ${MYSQL_HOST}
+      DB_PORT: ${MYSQL_PORT}
+      DB_NAME: ${MYSQL_DATABASE}
+      DB_USERNAME: ${MYSQL_USERNAME}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION:-86400000}
+
     depends_on:
       mysql:
         condition: service_healthy

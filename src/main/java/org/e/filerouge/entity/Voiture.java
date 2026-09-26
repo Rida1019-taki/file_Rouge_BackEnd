@@ -26,8 +26,6 @@ public class Voiture {
     @Column(nullable = false)
     private String modele;
     private Integer annee;
-    private String immatriculation;
-    private String couleur;
     private Integer nombrePlaces;
     private String transmission;
     private BigDecimal prixParJour;

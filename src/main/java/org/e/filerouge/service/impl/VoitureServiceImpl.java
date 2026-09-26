@@ -105,8 +105,6 @@ public class VoitureServiceImpl implements VoitureService {
         v.setMarque(r.marque());
         v.setModele(r.modele());
         v.setAnnee(r.annee());
-        v.setImmatriculation(r.immatriculation());
-        v.setCouleur(r.couleur());
         v.setNombrePlaces(r.nombrePlaces());
         v.setTransmission(r.transmission());
         v.setPrixParJour(r.prixParJour());

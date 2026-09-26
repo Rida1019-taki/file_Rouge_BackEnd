@@ -43,7 +43,7 @@ class AuthControllerTest {
 
     @Test
     void loginWithWrongPasswordReturnsUnauthorized() throws Exception {
-        repo.save(new Utilisateur(null, "Test", "Client", "login-invalide@test.com", "0600000100", "correctPassword", Role.CLIENT, true));
+        repo.save(new Utilisateur(null, "Test", "Client", "login-invalide@test.com", "0600000100", "correctPassword", Role.CLIENT));
         mockMvc.perform(post("/api/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"email\":\"login-invalide@test.com\",\"password\":\"wrongPassword\"}"))
@@ -53,7 +53,7 @@ class AuthControllerTest {
     @Test
     void loginWithValidCredentialsReturnsOk() throws Exception {
         var hash = new BCryptPasswordEncoder().encode("password123");
-        repo.save(new Utilisateur(null, "Test", "Client", "login-valide@test.com", "0600000101", hash, Role.CLIENT, true));
+        repo.save(new Utilisateur(null, "Test", "Client", "login-valide@test.com", "0600000101", hash, Role.CLIENT));
         mockMvc.perform(post("/api/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"email\":\"login-valide@test.com\",\"password\":\"password123\"}"))

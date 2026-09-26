@@ -36,7 +36,7 @@ public class AuthServiceImpl implements AuthService {
             throw new IllegalArgumentException("Email déjà utilisé");
         }
 
-        Utilisateur u = new Utilisateur(null, r.nom(), r.prenom(), r.email(), r.telephone(), encoder.encode(r.password()), r.role(), true);
+        Utilisateur u = new Utilisateur(null, r.nom(), r.prenom(), r.email(), r.telephone(), encoder.encode(r.password()), r.role());
         u = repo.saveAndFlush(u);
 
         if (u.getRole() == Role.CLIENT) {

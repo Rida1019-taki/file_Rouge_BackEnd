@@ -5,8 +5,7 @@ CREATE TABLE utilisateurs (
                               email VARCHAR(255) NOT NULL UNIQUE,
                               telephone VARCHAR(50) NOT NULL,
                               mot_de_passe VARCHAR(255) NOT NULL,
-                              role VARCHAR(50) NOT NULL,
-                              actif BOOLEAN DEFAULT TRUE
+                              role VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE clients (
@@ -39,8 +38,6 @@ CREATE TABLE voitures (
                           marque VARCHAR(255) NOT NULL,
                           modele VARCHAR(255) NOT NULL,
                           annee INT,
-                          immatriculation VARCHAR(100),
-                          couleur VARCHAR(50),
                           nombre_places INT,
                           transmission VARCHAR(50),
                           prix_par_jour DECIMAL(10, 2),
