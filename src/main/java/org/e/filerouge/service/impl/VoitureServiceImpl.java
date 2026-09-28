@@ -15,7 +15,7 @@ import org.e.filerouge.repository.OwnerRepository;
 import org.e.filerouge.repository.VilleRepository;
 import org.e.filerouge.repository.VoitureRepository;
 import org.e.filerouge.service.VoitureService;
-
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,30 +32,35 @@ public class VoitureServiceImpl implements VoitureService {
     private final VoitureMapper mapper;
 
     @Override
+    @PreAuthorize("hasAnyRole('CLIENT', 'OWNER', 'ADMIN')")
     @Transactional(readOnly = true)
     public List<VoitureResponse> findAll() {
         return cars.findAll().stream().map(mapper::toResponse).toList();
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('CLIENT', 'OWNER', 'ADMIN')")
     @Transactional(readOnly = true)
     public List<VoitureResponse> findByListingType(ListingType type) {
         return cars.findByListingType(type).stream().map(mapper::toResponse).toList();
     }
 
     @Override
+    @PreAuthorize("hasRole('OWNER')")
     @Transactional(readOnly = true)
     public List<VoitureResponse> findMine(Long ownerId) {
         return cars.findByOwnerId(ownerId).stream().map(mapper::toResponse).toList();
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('CLIENT', 'OWNER', 'ADMIN')")
     @Transactional(readOnly = true)
     public VoitureResponse getById(Long id) {
         return mapper.toResponse(cars.findById(id).orElseThrow(() -> new ResourceNotFoundException("Voiture introuvable")));
     }
 
     @Override
+    @PreAuthorize("hasRole('OWNER')")
     @Transactional
     public VoitureResponse create(VoitureRequest r, Long ownerId) {
         Voiture v = new Voiture();
@@ -69,6 +74,7 @@ public class VoitureServiceImpl implements VoitureService {
     }
 
     @Override
+    @PreAuthorize("hasRole('OWNER')")
     @Transactional
     public VoitureResponse update(Long id, VoitureRequest r, Long ownerId) {
         Voiture v = cars.findById(id).orElseThrow(() -> new ResourceNotFoundException("Voiture introuvable"));
@@ -116,6 +122,7 @@ public class VoitureServiceImpl implements VoitureService {
     }
 
     @Override
+    @PreAuthorize("hasRole('OWNER') or hasRole('ADMIN')")
     public void delete(Long id, Long userId, Role role) {
         Voiture v = cars.findById(id).orElseThrow(() -> new ResourceNotFoundException("Voiture introuvable"));
         if (role != Role.ADMIN && !v.getOwner().getId().equals(userId)) {
