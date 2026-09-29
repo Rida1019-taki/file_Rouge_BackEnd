@@ -2,6 +2,7 @@ package org.e.filerouge.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Component
+@Slf4j
 public class JwtUtil {
 
     @Value("${jwt.secret}")
@@ -30,11 +32,13 @@ public class JwtUtil {
         return Jwts.parser().verifyWith(key()).build().parseSignedClaims(token).getPayload().getSubject();
     }
 
-    public boolean isValid(String token, UserDetails user) {
-        try {
-            return extractUsername(token).equals(user.getUsername()) && Jwts.parser().verifyWith(key()).build().parseSignedClaims(token).getPayload().getExpiration().after(new Date());
-        } catch (Exception e) {
-            return false;
+    public boolean isValid(String token){
+        try{
+            Jwts.parser().verifyWith(key()).build().parseSignedClaims(token);
+            return true;
+        }catch (Exception e){
+            log.warn("JWT validation error: {}" , e.getMessage());
         }
+        return false;
     }
 }
