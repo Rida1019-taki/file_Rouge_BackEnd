@@ -35,44 +35,40 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.csrf(c -> c.disable()).cors(c -> {
-        }).sessionManagement(s ->
-                s.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        )
-                .authorizeHttpRequests(a ->
-                        a.requestMatchers(
-                                "/api/auth/**",
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**",
-                                "/swagger-ui.html").permitAll()
-                                .requestMatchers(HttpMethod.GET,
-                                        "/api/voitures/**",
+        return http
+                .csrf(csrf -> csrf.disable())
+
+                .cors(cors -> {
+                })
+
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+
+                .authorizeHttpRequests(auth ->
+                        auth
+                                // Public endpoints
+                                .requestMatchers(
+                                        "/api/auth/**",
+                                        "/swagger-ui/**",
+                                        "/swagger-ui.html",
+                                        "/v3/api-docs/**",
                                         "/uploads/**"
-                                )
-                                .permitAll()
+                                ).permitAll()
+
                                 .requestMatchers(
-                                        "/api/admin/**",
-                                        "/api/users/**")
-                                .hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.DELETE,
-                                        "/api/voitures/**")
-                                .hasAnyRole("OWNER", "ADMIN")
-                                .requestMatchers(
-                                        "/api/owner/**",
-                                        "/api/voitures/**")
-                                .hasRole("OWNER")
-                                .requestMatchers(
-                                        "/api/client/**",
-                                        "/api/reservations/my")
-                                .hasRole("CLIENT")
-                                .requestMatchers(
-                                        "/api/reservations/**"
-                                )
-                                .hasAnyRole(
-                                        "CLIENT", "OWNER", "ADMIN"
-                                )
-                                .anyRequest()
-                                .authenticated())
-                .addFilterBefore(jwt, UsernamePasswordAuthenticationFilter.class).build();
+                                        HttpMethod.GET,
+                                        "/api/voitures/**"
+                                ).permitAll()
+
+                                .anyRequest().authenticated()
+                )
+
+                .addFilterBefore(
+                        jwt,
+                        UsernamePasswordAuthenticationFilter.class
+                )
+
+                .build();
     }
 }
