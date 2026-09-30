@@ -60,6 +60,8 @@ public class SecurityConfig {
                                         "/api/voitures/**"
                                 ).permitAll()
 
+                                .requestMatchers("/api/users/**").hasRole("ADMIN")
+
                                 .anyRequest().authenticated()
                 )
 
