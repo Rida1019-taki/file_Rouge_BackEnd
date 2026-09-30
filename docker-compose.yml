@@ -20,7 +20,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: fileRouge-api
+    container_name: fileRouge-apiI
     restart: always
     ports:
       - "8080:8080"
